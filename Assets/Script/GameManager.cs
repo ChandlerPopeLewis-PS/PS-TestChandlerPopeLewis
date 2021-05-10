@@ -45,23 +45,14 @@ public class GameManager : MonoBehaviour
         floor.transform.parent = environment.transform;
 
         int obstacles = Random.Range(0, 5);
+        float gap = 19.0f / obstacles;
         for(int i = 0; i < obstacles; ++i) {
             GameObject obstacle = ObjectPool.GetObjectPool("Obstacle").PopRandom();
 
-            obstacle.transform.position = new Vector3((Random.Range(0, 3) * 2) + 1f, 0.25f, (20 * position) + Random.Range(1, 19));
+            obstacle.transform.position = new Vector3((Random.Range(0, 3) * 2) + 1f, 0.25f, (20 * position) + Random.Range(gap * i, gap * i + 1));
             obstacle.transform.parent = floor.transform;
 
             if(Physics.Raycast(obstacle.transform.position, Vector3.back, 1.5f, ~0, QueryTriggerInteraction.Collide) || Physics.Raycast(obstacle.transform.position, Vector3.forward, 1.5f, ~0, QueryTriggerInteraction.Collide)) {
-                ObjectPool.GetObjectPool("Obstacle").Push(obstacle);
-                i--;
-                continue;
-            }
-            if(Physics.RaycastAll(obstacle.transform.position, Vector3.left, 5f, ~0, QueryTriggerInteraction.Collide).Length > 1 || Physics.RaycastAll(obstacle.transform.position + new Vector3(0, 0, 3), Vector3.left, 5f, ~0, QueryTriggerInteraction.Collide).Length > 1) {
-                ObjectPool.GetObjectPool("Obstacle").Push(obstacle);
-                i--;
-                continue;
-            }
-            if(Physics.RaycastAll(obstacle.transform.position, Vector3.right, 5f, ~0, QueryTriggerInteraction.Collide).Length > 1 || Physics.RaycastAll(obstacle.transform.position + new Vector3(0, 0, 3), Vector3.right, 5f, ~0, QueryTriggerInteraction.Collide).Length > 1) {
                 ObjectPool.GetObjectPool("Obstacle").Push(obstacle);
                 i--;
                 continue;

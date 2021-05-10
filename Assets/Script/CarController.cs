@@ -9,17 +9,22 @@ public class CarController : MonoBehaviour
 
     Rigidbody _rigidbody;
 
+    private float _speed;
     private void Start() {
         _rigidbody = GetComponent<Rigidbody>();
+        _speed = -Random.Range(speed.x, speed.y);
     }
 
     void FixedUpdate()
     {
-        Vector3 newPosition = transform.position + (new Vector3(0, 0, -Random.Range(speed.x, speed.y)) * Time.fixedDeltaTime);
+        Vector3 newPosition = transform.position + (new Vector3(0, 0, _speed) * Time.fixedDeltaTime);
         
         if(Physics.Raycast(transform.position, Vector3.back, 1f, LayerMask.GetMask("HoleCollider"), QueryTriggerInteraction.Collide)) {
             ObjectPool.GetObjectPool("Obstacle").Push(gameObject);
         }
+
+        if(transform.position.z < -1)
+            ObjectPool.GetObjectPool("Obstacle").Push(gameObject);
 
         _rigidbody.MovePosition(newPosition);
     }
