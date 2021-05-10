@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6729065210063918159}
   - component: {fileID: 2449170370542495532}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HoleCollider
   m_TagString: HoleObstacle
   m_Icon: {fileID: 0}
@@ -55,11 +55,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Floor-RightHole Variant
-      objectReference: {fileID: 0}
-    - target: {fileID: 5755545871340650599, guid: d30a554bf943cac4dbd10ceaad0b2ac3,
-        type: 3}
-      propertyPath: m_TagString
-      value: Floor
       objectReference: {fileID: 0}
     - target: {fileID: 6612474987144356874, guid: d30a554bf943cac4dbd10ceaad0b2ac3,
         type: 3}

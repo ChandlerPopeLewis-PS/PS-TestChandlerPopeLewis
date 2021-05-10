@@ -25,10 +25,10 @@ public class Controller : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
-    private int previousLane = 1;
-    private float transitionTime = 0;
+    private int _previousLane = 1;
+    private float _transitionTime = 0;
 
-    private int points = 0;
+    private int _points = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +36,7 @@ public class Controller : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         
         healthText.text = health.ToString();
-        pointsText.text = points.ToString();
+        pointsText.text = _points.ToString();
     }
     private Vector3 fp;   //First touch position
     private Vector3 lp;   //Last touch position
@@ -91,21 +91,21 @@ public class Controller : MonoBehaviour
     public void OnMove(float direction) {
         if(direction > 0) {
             if(currentLane < lanes.Length - 1) {
-                previousLane = currentLane++;
-                transitionTime = 0;
+                _previousLane = currentLane++;
+                _transitionTime = 0;
             }
         } else if(direction < 0) {
             if(currentLane > 0) {
-                previousLane = currentLane--;
-                transitionTime = 0;
+                _previousLane = currentLane--;
+                _transitionTime = 0;
             }
         }
     }
 
     private void FixedUpdate() {
         Vector3 newPosition = transform.position + (speed * Time.fixedDeltaTime);
-        if(transitionTime < 1 && transitionTime >= 0) {
-            newPosition.x = Mathf.Lerp(lanes[previousLane].x, lanes[currentLane].x, transitionTime += (Time.fixedDeltaTime * laneSwitchSpeed));
+        if(_transitionTime < 1 && _transitionTime >= 0) {
+            newPosition.x = Mathf.Lerp(lanes[_previousLane].x, lanes[currentLane].x, _transitionTime += (Time.fixedDeltaTime * laneSwitchSpeed));
         }
 
         _rigidbody.MovePosition(newPosition);
@@ -123,8 +123,8 @@ public class Controller : MonoBehaviour
             string name = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(name);
         } else if(other.tag.Equals("Collectible")) {
-            points++;
-            pointsText.text = points.ToString();
+            _points++;
+            pointsText.text = _points.ToString();
             ObjectPool.GetObjectPool("Collectible").Push(other.gameObject);
         }
     }
